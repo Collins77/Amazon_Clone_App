@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:opasso_app/common/widgets/custom_button.dart';
 import 'package:opasso_app/common/widgets/custom_textfield.dart';
 import 'package:opasso_app/constants/global_variables.dart';
+import 'package:opasso_app/features/auth/services/auth_service.dart';
 
 enum Auth { signin, signup }
 
@@ -17,6 +18,7 @@ class _AuthScreenState extends State<AuthScreen> {
   Auth _auth = Auth.signup;
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
+  final AuthService authService = AuthService();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -28,6 +30,14 @@ class _AuthScreenState extends State<AuthScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _nameController.dispose();
+  }
+
+  void signUpUser() {
+    authService.signUpUser(
+        context: context,
+        email: _emailController.text,
+        password: _passwordController.text,
+        name: _nameController.text);
   }
 
   @override
@@ -49,8 +59,8 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
               ListTile(
                 tileColor: _auth == Auth.signup
-                ? GlobalVariables.backgroundColor 
-                : GlobalVariables.greyBackgroundCOlor,
+                    ? GlobalVariables.backgroundColor
+                    : GlobalVariables.greyBackgroundCOlor,
                 title: const Text(
                   'Create Account',
                   style: TextStyle(
@@ -91,15 +101,22 @@ class _AuthScreenState extends State<AuthScreen> {
                           hintText: 'Password',
                         ),
                         const SizedBox(height: 10),
-                        CustomButton(text: 'Sign Up', onTap: () {},)
+                        CustomButton(
+                          text: 'Sign Up',
+                          onTap: () {
+                            if (_signUpFormKey.currentState!.validate()) {
+                              signUpUser();
+                            }
+                          },
+                        )
                       ],
                     ),
                   ),
                 ),
               ListTile(
                 tileColor: _auth == Auth.signin
-                ? GlobalVariables.backgroundColor 
-                : GlobalVariables.greyBackgroundCOlor,
+                    ? GlobalVariables.backgroundColor
+                    : GlobalVariables.greyBackgroundCOlor,
                 title: const Text(
                   'Sign-In.',
                   style: TextStyle(
@@ -135,7 +152,10 @@ class _AuthScreenState extends State<AuthScreen> {
                           hintText: 'Password',
                         ),
                         const SizedBox(height: 10),
-                        CustomButton(text: 'Sign In', onTap: () {},)
+                        CustomButton(
+                          text: 'Sign In',
+                          onTap: () {},
+                        )
                       ],
                     ),
                   ),
