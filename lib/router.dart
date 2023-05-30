@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:opasso_app/common/widgets/bottom_bar.dart';
 import 'package:opasso_app/features/auth/screens/auth_screen.dart';
 import 'package:opasso_app/features/home/screens/home_screen.dart';
 
@@ -14,6 +15,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const HomeScreen(),
+      );
+
+      case BottomBar.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const BottomBar(),
       );
     default:
       return MaterialPageRoute(

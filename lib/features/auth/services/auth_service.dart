@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:opasso_app/common/widgets/bottom_bar.dart';
 import 'package:opasso_app/constants/error_handling.dart';
 import 'package:opasso_app/constants/global_variables.dart';
 import 'package:opasso_app/constants/utils.dart';
@@ -69,7 +70,7 @@ class AuthService {
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
           Navigator.pushNamedAndRemoveUntil(
-              context, HomeScreen.routeName, (route) => false);
+              context, BottomBar.routeName, (route) => false);
         },
       );
     } catch (e) {

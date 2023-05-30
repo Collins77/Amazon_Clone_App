@@ -55,7 +55,7 @@ authRouter.post('/tokenIsValid', async (req, res) => {
     try {
         const token = req.header('x-auth-token');
         if(!token) return res.json(false);   
-        const verified = jwtverify(token, 'passwordKey');
+        const verified = jwt.verify(token, 'passwordKey');
         if(!verified) return res.json(false);
 
         const user = await User.findById(verified.id);
